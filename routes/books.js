@@ -64,6 +64,13 @@ router.post("/", (req,res)=>{
     books.push(book);
     res.status(201).json(book); //201 created succes
  })
+
+
+
+
+
+
+
 // update
 router.put("/:id",(req,res)=>
 {
@@ -78,9 +85,31 @@ res.status(200).json({message : "book has ben update"});
 
 }else {
     res.status(400).json({message : "book not find"});
-    
+
 }
 })
+
+
+// Delete
+
+router.put("/:id",(req,res)=>
+{
+const book =books.find(b=> b.id ===parseInt(req.params.id));
+
+if (book){
+res.status(200).json({message : "book has ben update"});
+}  else {
+    res.status(400).json({message : "book not find"});
+
+}
+})
+
+
+
+
+
+
+
 // validate update book
 
  function validatupdatebook(obj){
