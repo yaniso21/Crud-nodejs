@@ -27,13 +27,9 @@ const books =[
  * @method get
  * @acces Public
  */
-router.get("/", (req,res)=>{
 
-   res.send("hello express");
-});
- 
 router.get("/", (req,res) =>{
-   res.json(books); 
+   res.status(200).json(books); 
 })
 
 router.get("/:id", (req,res) =>{
@@ -46,6 +42,8 @@ router.get("/:id", (req,res) =>{
  })
  
 router.post("/", (req,res)=>{
+
+
     const {error} = validatecreatebook(req.body);
   
     if (error){
@@ -66,12 +64,9 @@ router.post("/", (req,res)=>{
  })
 
 
-
-
-
-
-
 // update
+
+
 router.put("/:id",(req,res)=>
 {
 const {error} = validatupdatebook(req.body);
@@ -103,12 +98,6 @@ res.status(200).json({message : "book has ben update"});
 
 }
 })
-
-
-
-
-
-
 
 // validate update book
 
