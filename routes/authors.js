@@ -1,6 +1,7 @@
 const express = require ("express");
 const router = express.Router ();
 const Joi = require('joi');
+const { Author } = require("../models/Author");
 
 const authors = [
     {
@@ -41,7 +42,7 @@ const authors = [
 
   // Post
   
- router.post("/", (req,res)=>{
+ router.post("/", async (req,res)=>{
  
  
      const {error} = validatecreateuser(req.body);
@@ -50,16 +51,25 @@ const authors = [
          return res.status(400).json({message : error.details[0].message});
      }
  
-     const author = {
-         id: author.length +1,
-         firstname : req.body.firstname,
-         lastname: req.body.lastname,
-         nationality: req.body.nationality,
-         
-     }
-     authors.push(author)
-        res.status(201).json(author); //201 created succes
-  })
+  try {
+    const author = new Author ({
+        
+        firstname : req.body.firstname,
+        lastname: req.body.lastname,
+        nationality: req.body.nationality,
+        
+    });
+    
+    const result = await author.save();   
+    
+        res.status(201).json(result); 
+  } 
+  catch(error)
+  {
+    console.log(error);
+    res.status(500).json({message : "something went wrong.."});
+  }
+  });
  
  
  // update
